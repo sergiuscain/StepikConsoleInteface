@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using StepikPetProject.Services;
 
 namespace StepikPetProject
 {
@@ -6,18 +7,7 @@ namespace StepikPetProject
     {
         static void Main()
         {
-            //Строка подключения
-            string connectionString = "Server=localhost;Database=stepik;Uid=root;Pwd=root;";
-
-            //Создаем подключение
-            MySqlConnection connection = new MySqlConnection(connectionString);
-
-            connection.Open();
-            Console.WriteLine("Connection open");
-
-            // Закрываем подключение
-            connection.Close();
-            Console.WriteLine("Подключение закрыто");
+           UsersService.Add(new Models.User { Avatar="avatarURI", Details = "testDetails", FullName="Anna Anika", IsActive=true } );
         }
     }
 }

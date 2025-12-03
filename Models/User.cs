@@ -8,10 +8,10 @@ namespace StepikPetProject.Models
 {
     public class User
     {
-        public string FullName;
-        public string? Details;
-        public DateTime JoinDate = DateTime.Now;
-        public string? Avatar;
-        public bool IsActive = true;
+        public string FullName { get; set; }
+        public string? Details { get; set; }
+        public DateTime JoinDate { get; set; } = DateTime.Now;
+        public string? Avatar { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }
