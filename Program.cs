@@ -33,6 +33,11 @@ namespace StepikPetProject
                     Console.Write("До свидания!");
                     break;
                 }
+                else if (cmd == "3")
+                {
+                    var user = UsersService.Get("Сергей Королев");
+                    break;
+                }
                 else
                 {
                     Console.WriteLine("Неверный выбор. Попробуйте снова.");
