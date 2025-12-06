@@ -7,7 +7,20 @@ namespace StepikPetProject
     {
         static void Main()
         {
-           UsersService.Add(new Models.User { Avatar="avatarURI", Details = "testDetails", FullName="Anna Anika", IsActive=true } );
+           public static void RegisterUser()
+        {
+            Console.WriteLine("Введите имя и фамилию через пробел и нажмите Enter:");
+            var user = new User { FullName = Console.ReadLine() };
+            var result = UsersService.Add(user);
+            if (result)
+            {
+                Console.WriteLine($"Пользователь '{user.FullName}' успешно добавлен.");
+            }
+            else
+            {
+                Console.WriteLine("Произошла ошибка, произведен выход на главную страницу");
+            }
         }
+    }
     }
 }
