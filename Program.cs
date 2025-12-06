@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using StepikPetProject.Models;
 using StepikPetProject.Services;
 
 namespace StepikPetProject
@@ -7,7 +8,41 @@ namespace StepikPetProject
     {
         static void Main()
         {
-           public static void RegisterUser()
+            while (true)
+            {
+                Console.WriteLine(@"
+                ************************************************
+                * Добро пожаловать на онлайн платформу Stepik! *
+                ************************************************
+
+                Выберите действие (введите число и нажмите Enter):
+
+                1. Зарегистрироваться
+                2. Закрыть приложение
+
+                ************************************************
+                ");
+
+                var cmd = Console.ReadLine();
+                if (cmd == "1")
+                {
+                    RegisterUser();
+                }
+                else if (cmd == "2")
+                {
+                    Console.Write("До свидания!");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Неверный выбор. Попробуйте снова.");
+                }
+
+            }
+        }
+
+
+        public static void RegisterUser()
         {
             Console.WriteLine("Введите имя и фамилию через пробел и нажмите Enter:");
             var user = new User { FullName = Console.ReadLine() };
@@ -21,6 +56,5 @@ namespace StepikPetProject
                 Console.WriteLine("Произошла ошибка, произведен выход на главную страницу");
             }
         }
-    }
     }
 }
