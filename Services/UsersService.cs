@@ -80,5 +80,16 @@ namespace StepikPetProject.Services
             //Пользователь не найден
             return null;
         }
+        /// <summary>
+        /// Получение общего количества пользователей
+        /// </summary>
+        public static int GetTotalCount()
+        {
+            using var connection = new MySqlConnection(Constant.ConnectionString);
+            connection.Open();
+            using var command = new MySqlCommand("SELECT COUNT(*) FROM users;", connection);
+            var result = command.ExecuteScalar();
+            return result == null ? 0 : (int)result;
+        }
     }
 }
