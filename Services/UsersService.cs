@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using StepikPetProject.Models;
+using System.Data;
 
 namespace StepikPetProject.Services
 {
@@ -56,12 +57,13 @@ namespace StepikPetProject.Services
                 var user = new User
                 {
                     FullName = reader.GetString("full_name"),
-                    Details = reader.IsDBNull(reader.GetOrdinal("details"))
-                         ? null : reader.GetString("details"),
+                    Details = reader.IsDBNull("details") ? null : reader.GetString("details"),
                     JoinDate = reader.GetDateTime("join_date"),
+                    Avatar = reader.IsDBNull("avatar") ? null : reader.GetString("avatar"),
                     IsActive = reader.GetBoolean("is_active"),
-                    Avatar = reader.IsDBNull(reader.GetOrdinal("avatar"))
-                        ? null : reader.GetString("avatar")
+                    Knowledge = reader.GetInt32("knowledge"),
+                    Reputation = reader.GetInt32("reputation"),
+                    FollowersCount = reader.GetInt32("followers_count")
                 };
                 return user;
             }
