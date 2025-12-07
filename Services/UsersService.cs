@@ -81,5 +81,45 @@ namespace StepikPetProject.Services
             var result = command.ExecuteScalar();
             return result == null ? 0 : (int)result;
         }
+        /// <summary>
+        /// Форматирование показателей пользователя
+        /// </summary>
+        /// <param name="number">Число для форматирования</param>
+        /// <returns>Отформатированное число</returns>
+        public static string FormatUserMetrics(int number)
+        {
+            using var connection = new MySqlConnection(Constant.ConnectionString);
+            connection.Open();
+
+            // Создание команды для вызова функции
+            var functionName = "format_number";
+            using var command = new MySqlCommand(functionName, connection);
+            command.CommandType = CommandType.StoredProcedure;
+
+            // Указываем параметр для возвращаемого значения
+            var returnValueParam = new MySqlParameter()
+            {
+                Direction = ParameterDirection.ReturnValue
+            };
+
+            // Добавляем входной параметр
+            var numberParam = new MySqlParameter("number", number)
+            {
+                Direction = ParameterDirection.Input
+            };
+
+            // Добавляем параметры к команде
+            command.Parameters.Add(numberParam);
+            command.Parameters.Add(returnValueParam);
+
+            // Выполнение команды
+            command.ExecuteNonQuery();
+
+            // Получение значения возвращаемого параметра
+            var returnValue = returnValueParam.Value;
+
+            // Возвращаем значение
+            return returnValue?.ToString() ?? "";
+        }
     }
 }
