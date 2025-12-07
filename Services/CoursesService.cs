@@ -19,7 +19,7 @@ namespace StepikPetProject.Services
             connection.Open();
             using var command = new MySqlCommand("SELECT COUNT(*) FROM courses;", connection);
             var result = command.ExecuteScalar();
-            return result == null ? 0 : (int)result;
+            return result == null ? 0 : Convert.ToInt32(result);
         }
         /// <summary>
         /// Получение списка курсов пользователя

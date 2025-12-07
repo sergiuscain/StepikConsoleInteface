@@ -79,7 +79,7 @@ namespace StepikPetProject.Services
             connection.Open();
             using var command = new MySqlCommand("SELECT COUNT(*) FROM users;", connection);
             var result = command.ExecuteScalar();
-            return result == null ? 0 : (int)result;
+            return result == null ? 0 : Convert.ToInt32(result);
         }
         /// <summary>
         /// Форматирование показателей пользователя
