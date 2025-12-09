@@ -171,15 +171,18 @@ namespace StepikPetProject
                         HandleUserCoursesMenu(user);
                         break;
                     case "3":
-                        DisplayUserRating();
+                        DisplayCertificate(user.FullName);
                         break;
                     case "4":
+                        DisplayUserRating();
+                        break;
+                    case "5":
                         DisplayMainMenu();
                         return;
                     default:
                         PrintWrongChoiceMessage();
                         break;
-                } 
+                }
             }
         }
 
@@ -196,8 +199,9 @@ namespace StepikPetProject
 
 1. Посмотреть профиль
 2. Посмотреть курсы
-3. Топ пользователей 
-4. Выйти
+3. Сертификаты
+4. Топ пользователей 
+5. Выйти
 ");
             Console.ResetColor();
         }
@@ -340,8 +344,38 @@ ______________________________________________");
             Console.WriteLine(new string('-', separatorCount));
             Console.ResetColor();
         }
+        public static void DisplayCertificate(string fullName)
+        {
+            var certificates = CertificatesService.Get(fullName);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n* Сертификаты пользователя " + fullName + " *\n\n" +
+                              "Выберите действие (введите число и нажмите Enter):\n" +
+                              "1. Назад\n");
 
+            if (certificates.Tables.Count == 0 || certificates.Tables[0].Rows.Count == 0)
+            {
+                Console.WriteLine("У пользователя еще нет сертификатов");
+                return;
+            }
 
+            var indent = 25;
+            var separatorCount = 60;
 
+            Console.WriteLine(new string('-', separatorCount));
+            Console.WriteLine($"{"Курс".PadRight(indent)} " +
+                              $"{"Дата выдачи".PadRight(indent)} " +
+                              $"{"Оценка".PadRight(indent)}");
+            Console.WriteLine(new string('-', separatorCount));
+
+            foreach (DataRow row in certificates.Tables[0].Rows)
+            {
+                Console.WriteLine($"{row["title"]?.ToString()?.PadRight(indent)} " +
+                                  $"{row["issue_date"]?.ToString()?.PadRight(indent)} " +
+                                  $"{row["grade"]?.ToString()?.PadRight(indent)}");
+            }
+
+            Console.WriteLine(new string('-', separatorCount));
+            Console.ResetColor();
+        }
     }
 }
