@@ -121,5 +121,28 @@ namespace StepikPetProject.Services
             // Возвращаем значение
             return returnValue?.ToString() ?? "";
         }
+        /// <summary>
+        /// Рейтинг пользователей
+        /// </summary>
+        /// <returns>DataSet</returns>
+        public static DataSet GetUserRating()
+        {
+            // Создаем соединение.
+            using var connection = new MySqlConnection(Constant.ConnectionString);
+            // Создаем DataSet
+            var dataSet = new DataSet();
+            // Создаем текст запроса для выборки данных на SQL.
+            var sqlQuery = @"SELECT full_name, knowledge, reputation 
+                            FROM users
+                            WHERE is_active = true 
+                            ORDER BY knowledge DESC
+                            LIMIT 10;";
+            // Создаем DataAdapter, который будет заполнять DataSet.
+            using var dataAdapter = new MySqlDataAdapter(sqlQuery, connection);
+            // Заполняем DataSet данными на основе запроса, который мы передали в конструкторе DataAdapter-а
+            dataAdapter.Fill(dataSet);
+            // Возвращаем DataSet с заполненными данными.
+            return dataSet;
+        }
     }
 }
