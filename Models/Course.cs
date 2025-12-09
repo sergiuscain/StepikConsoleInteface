@@ -8,8 +8,9 @@ namespace StepikPetProject.Models
 {
     public class Course
     {
-        public string Title { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; } = default!;
         public string? Summary { get; set; }
-        public string? Photo {  get; set; }
+        public string? Photo { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace StepikPetProject.Models
 {
     public class User
     {
-        public string FullName { get; set; }
+        public string FullName { get; set; } = default!;
         public string? Details { get; set; }
         public DateTime JoinDate { get; set; } = DateTime.Now;
         public string? Avatar { get; set; }
