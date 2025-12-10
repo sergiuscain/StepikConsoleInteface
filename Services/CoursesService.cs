@@ -1,67 +1,60 @@
 ﻿using MySql.Data.MySqlClient;
-using StepikPetProject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
-namespace StepikPetProject.Services
+public class CoursesService
 {
-    public class CoursesService
+    /// <summary>
+    /// Получение списка курсов пользователя
+    /// </summary>
+    /// <param name="fullName">Полное имя пользователя</param>
+    /// <returns>Список курсов</returns>
+    public List<Course> Get(string fullName)
     {
-        /// <summary>
-        /// Получение общего количества курсов
-        /// </summary>
-        public int GetTotalCount()
+        var courses = new List<Course>();
+
+        using var connection = new MySqlConnection(Constant.ConnectionString);
+        connection.Open();
+
+        var query = @"SELECT title, summary, photo, courses.id
+                      FROM user_courses
+                      JOIN courses ON user_courses.course_id = courses.id
+                      JOIN users ON users.id = user_courses.user_id
+                      WHERE users.full_name = @fullName AND users.is_active = 1
+                      ORDER BY user_courses.last_viewed DESC;";
+
+        using var command = new MySqlCommand(query, connection);
+        var fullNameParam = new MySqlParameter("@fullName", fullName);
+        command.Parameters.Add(fullNameParam);
+
+        using var reader = command.ExecuteReader();
+        while (reader.Read())
         {
-            using var connection = new MySqlConnection(Constant.ConnectionString);
-            connection.Open();
-            using var command = new MySqlCommand("SELECT COUNT(*) FROM courses;", connection);
-            var result = command.ExecuteScalar();
-            return result == null ? 0 : Convert.ToInt32(result);
-        }
-        /// <summary>
-        /// Получение списка курсов пользователя
-        /// </summary>
-        /// <param name="fullName">Полное имя пользователя</param>
-        /// <returns>Список курсов</returns>
-        public List<Course> Get(string fullName)
-        {
-            var courses = new List<Course>();
-
-            using var connection = new MySqlConnection(Constant.ConnectionString);
-            connection.Open();
-
-            // Используем JOIN для получения всех курсов пользователя
-            using var command = new MySqlCommand(@"SELECT c.* 
-                                        FROM courses c
-                                        INNER JOIN user_courses uc ON c.id = uc.course_id
-                                        INNER JOIN users u ON uc.user_id = u.id
-                                        WHERE u.full_name = @full_name 
-                                        AND u.is_active = true;", connection);
-
-            command.Parameters.Add(new MySqlParameter("@full_name", fullName));
-
-            using var reader = command.ExecuteReader();
-
-            while (reader.Read())
+            var course = new Course
             {
-                var course = new Course()
-                {
-                    Title = reader.GetString("title"),
-                    Summary = reader.IsDBNull(reader.GetOrdinal("Summary"))
-                                 ? null
-                                 : reader.GetString("Summary"),
-                    Photo = reader.IsDBNull(reader.GetOrdinal("photo"))
-                           ? null
-                           : reader.GetString("photo")
-                };
-
-                courses.Add(course);
-            }
-
-            return courses;
+                Id = reader.GetInt32("id"),
+                Title = reader.GetString("title"),
+                Summary = reader.IsDBNull("summary") ? null : reader.GetString("summary"),
+                Photo = reader.IsDBNull("photo") ? null : reader.GetString("photo")
+            };
+            courses.Add(course);
         }
+
+        return courses;
+    }
+
+    /// <summary>
+    /// Получение общего количества курсов
+    /// </summary>
+    public int GetTotalCount()
+    {
+        using var connection = new MySqlConnection(Constant.ConnectionString);
+        connection.Open();
+
+        var query = "SELECT COUNT(*) FROM courses;";
+
+        using var command = new MySqlCommand(query, connection);
+        var result = command.ExecuteScalar();
+
+        return result != null ? Convert.ToInt32(result) : 0;
     }
 }

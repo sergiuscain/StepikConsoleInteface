@@ -1,5 +1,4 @@
-﻿using StepikPetProject.Services;
-using System.Data;
+﻿using System.Data;
 
 public record class RatingMenu(WrongChoice _wrongChoice)
 {

@@ -1,4 +1,4 @@
-﻿using StepikPetProject.Models;
+﻿
 
 public record class UserMenu(User _user, WrongChoice _wrongChoice)
 {

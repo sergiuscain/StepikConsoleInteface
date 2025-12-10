@@ -1,6 +1,4 @@
-﻿using StepikPetProject.Models;
-using StepikPetProject.Services;
-using System.Data;
+﻿using System.Data;
 
 public record class ProfileMenu(User _user, WrongChoice _wrongChoice)
 {

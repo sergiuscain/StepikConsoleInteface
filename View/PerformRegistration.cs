@@ -1,5 +1,4 @@
-﻿using StepikPetProject.Models;
-using StepikPetProject.Services;
+﻿
 
 public class UsersProcessing
 {

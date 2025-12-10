@@ -1,6 +1,4 @@
-﻿using StepikPetProject.Models;
-using StepikPetProject.Services;
-
+﻿
 public class MainMenu
 {
     private readonly WrongChoice _wrongChoice = new();

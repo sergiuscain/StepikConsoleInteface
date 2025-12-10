@@ -1,7 +1,4 @@
-﻿using StepikPetProject.Models;
-using StepikPetProject.Services;
-using System.Data;
-using System.Linq;
+﻿using System.Data;
 
 public record class CommentsMenu(int _courseId, User _user, WrongChoice _wrongChoice)
 {
