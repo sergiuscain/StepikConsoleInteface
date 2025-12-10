@@ -15,7 +15,7 @@ namespace StepikPetProject.Services
         /// </summary>
         /// <param name="fullName">Полное имя пользователя</param>
         /// <returns>DataSet</returns> 
-        public static DataSet Get(string fullName)
+        public DataSet Get(string fullName)
         {
             // Создаем подключение, DataSet, SQL запрос, объект команды и DataAdapter
             using var connection = new MySqlConnection(Constant.ConnectionString);

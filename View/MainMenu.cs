@@ -7,11 +7,11 @@ namespace StepikPetProject.View
     public class MainMenu
     {
         private readonly WrongChoice _wrongChoice = new WrongChoice();
-
+        static readonly CoursesService coursesService = new CoursesService();
         public void Display()
         {
-            var totalCoursesCount = CoursesService.GetTotalCount();
-            var totalUsersCount = UsersService.GetTotalCount();
+            var totalCoursesCount = coursesService.GetTotalCount();
+            var totalUsersCount = coursesService.GetTotalCount();
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine("************************************************\n" +
                               "* Добро пожаловать на онлайн платформу Stepik! *\n" +

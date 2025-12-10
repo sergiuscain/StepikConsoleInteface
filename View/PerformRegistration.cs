@@ -5,6 +5,7 @@ namespace StepikPetProject.View
 {
     public static class UsersProcessing
     {
+        static readonly UsersService usersService = new UsersService();
         public static User PerformRegistration()
         {
             var userName = "";
@@ -19,7 +20,7 @@ namespace StepikPetProject.View
                 FullName = userName
             };
 
-            bool isAdditionSuccessful = UsersService.Add(newUser);
+            bool isAdditionSuccessful = usersService.Add(newUser);
 
             if (isAdditionSuccessful)
             {
@@ -46,7 +47,7 @@ namespace StepikPetProject.View
                 userName = Console.ReadLine();
             }
 
-            User? user = UsersService.Get(userName);
+            User? user = usersService.Get(userName);
 
             if (user != null)
             {

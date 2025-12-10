@@ -13,7 +13,7 @@ namespace StepikPetProject.Services
         /// <summary>
         /// Получение общего количества курсов
         /// </summary>
-        public static int GetTotalCount()
+        public int GetTotalCount()
         {
             using var connection = new MySqlConnection(Constant.ConnectionString);
             connection.Open();
@@ -26,7 +26,7 @@ namespace StepikPetProject.Services
         /// </summary>
         /// <param name="fullName">Полное имя пользователя</param>
         /// <returns>Список курсов</returns>
-        public static List<Course> Get(string fullName)
+        public List<Course> Get(string fullName)
         {
             var courses = new List<Course>();
 

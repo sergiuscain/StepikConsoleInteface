@@ -7,10 +7,12 @@ namespace StepikPetProject.View
 
     public record class CommentsMenu(int _courseId, User _user, WrongChoice _wrongChoice)
     {
+        static readonly CommentsService commentsService = new CommentsService();
+        static readonly CoursesService coursesService = new CoursesService();
         public void Display()
-        {
-            List<Comment> comments = CommentsService.Get(_courseId);
-            List<Course> courses = CoursesService.Get(_user.FullName);
+        {;
+            List<Comment> comments = commentsService.Get(_courseId);
+            List<Course> courses = coursesService.Get(_user.FullName);
             var currentCourse = courses.FirstOrDefault(x => x.Id == _courseId);
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("\n* Комментарии к курсу " + currentCourse?.Title + " *\n\n" +
@@ -40,7 +42,7 @@ namespace StepikPetProject.View
         {
             while (true)
             {
-                List<Comment> comments = CommentsService.Get(_courseId);
+                List<Comment> comments = commentsService.Get(_courseId);
                 var commentsIds = comments.Select(x => x.Id.ToString()).ToList();
                 string? choice = Console.ReadLine();
 
@@ -55,7 +57,7 @@ namespace StepikPetProject.View
                         if (commentsIds.Contains(choice!))
                         {
                             var commentId = Convert.ToInt32(choice);
-                            var isCommentDeleted = CommentsService.Delete(commentId);
+                            var isCommentDeleted = commentsService.Delete(commentId);
                             if (isCommentDeleted)
                             {
                                 Console.ForegroundColor = ConsoleColor.Green;

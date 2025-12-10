@@ -7,9 +7,10 @@ namespace StepikPetProject.View
 
     public record class CoursesMenu(User _user, WrongChoice _wrongChoice)
     {
+        readonly static CoursesService coursesService = new CoursesService();
         public void Display()
         {
-            List<Course> courses = CoursesService.Get(_user.FullName);
+            List<Course> courses = coursesService.Get(_user.FullName);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\n* Список курсов " + _user.FullName + " *\n\n" +
                               "Выберите действие (введите число и нажмите Enter):\n" +
@@ -39,7 +40,7 @@ namespace StepikPetProject.View
         {
             while (true)
             {
-                List<Course> courses = CoursesService.Get(_user.FullName);
+                List<Course> courses = coursesService.Get(_user.FullName);
                 var coursesIds = courses.Select(x => x.Id.ToString()).ToList();
                 string? choice = Console.ReadLine();
 

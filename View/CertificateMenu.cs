@@ -7,9 +7,10 @@ namespace StepikPetProject.View
 
     public record class CertificateMenu(User _user, WrongChoice _wrongChoice)
     {
+        readonly static CertificatesService certificatesService = new CertificatesService();
         public void Display()
         {
-            var certificates = CertificatesService.Get(_user.FullName);
+            var certificates = certificatesService.Get(_user.FullName);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\n* Сертификаты пользователя " + _user.FullName + " *\n\n" +
                               "Выберите действие (введите число и нажмите Enter):\n" +
